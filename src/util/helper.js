@@ -27,8 +27,14 @@ export function transformMindmapData(
         return width;
     }
 
+    let highlightedNodes = new Set();
     // Assign positions using subtree width
     function layout(node, x, y, parentId = null) {
+        if (node.id === activeNode) {
+            const ids = node.children.map((child) => child.id);
+            highlightedNodes = new Set(ids);
+        }
+
         nodes.push({
             id: node.id.toString(),
             position: { x, y },
@@ -38,6 +44,7 @@ export function transformMindmapData(
                 description: node.description,
                 addNode: addNode,
                 deleteNode: deleteNode,
+                bgColor: highlightedNodes.has(node.id) ? "#00ff0055" : "white",
             },
             type: "selectorNode",
         });

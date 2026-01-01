@@ -86,7 +86,7 @@ function App() {
         setNodes(result.nodes);
         setEdges(result.edges);
         console.log(result);
-    }, [treeData, collapsedNode]);
+    }, [treeData, collapsedNode, activeNode]);
 
     return (
         <div className="container">

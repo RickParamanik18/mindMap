@@ -72,6 +72,7 @@ export default memo(({ data, isConnectable }) => {
                     padding: 10,
                     borderRadius: 5,
                     cursor: "pointer",
+                    background: data.bgColor,
                 }}
             >
                 <Handle
