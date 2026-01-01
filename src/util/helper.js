@@ -1,11 +1,17 @@
-export function transformMindmapData(root, addNode, deleteNode) {
+export function transformMindmapData(
+    root,
+    addNode,
+    deleteNode,
+    collapsedNode,
+    activeNode
+) {
     const nodes = [];
     const edges = [];
 
-    const LEVEL_GAP = 300; // horizontal distance between levels
-    const NODE_GAP = 120; // vertical distance between siblings
+    const LEVEL_GAP = 300;
+    const NODE_GAP = 120;
 
-    // 1️⃣ Compute subtree width
+    // Compute subtree width
     function computeSubtreeWidth(node) {
         if (!node.children || node.children.length === 0) {
             node.subtreeWidth = 1;
@@ -21,7 +27,7 @@ export function transformMindmapData(root, addNode, deleteNode) {
         return width;
     }
 
-    // 2️⃣ Assign positions using subtree width
+    // Assign positions using subtree width
     function layout(node, x, y, parentId = null) {
         nodes.push({
             id: node.id.toString(),
@@ -47,16 +53,18 @@ export function transformMindmapData(root, addNode, deleteNode) {
 
         let currentY = y - ((node.subtreeWidth - 1) * NODE_GAP) / 2;
 
-        for (const child of node.children) {
-            const childCenterY = currentY + (child.subtreeWidth * NODE_GAP) / 2;
+        if (!collapsedNode.has(node.id)) {
+            for (const child of node.children) {
+                const childCenterY =
+                    currentY + (child.subtreeWidth * NODE_GAP) / 2;
 
-            layout(child, x + LEVEL_GAP, childCenterY, node.id);
+                layout(child, x + LEVEL_GAP, childCenterY, node.id);
 
-            currentY += child.subtreeWidth * NODE_GAP;
+                currentY += child.subtreeWidth * NODE_GAP;
+            }
         }
     }
 
-    // Execute layout
     computeSubtreeWidth(root);
     layout(root, 0, 0);
 

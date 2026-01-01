@@ -12,13 +12,15 @@ export default memo(({ data, isConnectable }) => {
         }
     };
 
-    const addNode = () => {
+    const addNode = (e) => {
+        e.stopPropagation();
         console.log("adding node");
         data.addNode(data.id);
         // updateNodeInternals(data.id);
     };
 
-    const deleteNode = () => {
+    const deleteNode = (e) => {
+        e.stopPropagation();
         console.log("deleting node");
         data.deleteNode(data.id);
         // updateNodeInternals(data.id);
@@ -75,9 +77,6 @@ export default memo(({ data, isConnectable }) => {
                 <Handle
                     type="target"
                     position={Position.Left}
-                    onConnect={(params) =>
-                        console.log("handle onConnect", params)
-                    }
                     isConnectable={isConnectable}
                 />
                 <div

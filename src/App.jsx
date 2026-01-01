@@ -14,10 +14,23 @@ function App() {
     const [treeData, setTreeData] = useState(data);
     const [nodes, setNodes] = useState([]);
     const [edges, setEdges] = useState([]);
-    // const [collapsedNode, setCollapsedNode] = useState(new Set());
+    const [collapsedNode, setCollapsedNode] = useState(new Set());
+    const [activeNode, setActiveNode] = useState(null);
 
     const nodeClickHandler = (e, node) => {
-        console.log(node);
+        console.log("Clicked - " + node.id);
+        setActiveNode(node.id);
+        setCollapsedNode((prev) => {
+            const next = new Set(prev);
+
+            if (next.has(node.id)) {
+                next.delete(node.id);
+            } else {
+                next.add(node.id);
+            }
+
+            return next;
+        });
     };
 
     const addNode = (id) => {
@@ -63,12 +76,17 @@ function App() {
     };
 
     useEffect(() => {
-        console.log("treedata", treeData);
-        const result = transformMindmapData(treeData, addNode, deleteNode);
+        const result = transformMindmapData(
+            treeData,
+            addNode,
+            deleteNode,
+            collapsedNode,
+            activeNode
+        );
         setNodes(result.nodes);
         setEdges(result.edges);
         console.log(result);
-    }, [treeData]);
+    }, [treeData, collapsedNode]);
 
     return (
         <div className="container">
