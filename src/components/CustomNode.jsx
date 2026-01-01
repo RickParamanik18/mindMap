@@ -82,8 +82,8 @@ export default memo(({ data, isConnectable }) => {
                 />
                 <div
                     title={
-                        data.description.length > 30
-                            ? data.description.slice(0, 30) + "..."
+                        data.description.length > 40
+                            ? data.description.slice(0, 40) + "..."
                             : data.description
                     }
                 >

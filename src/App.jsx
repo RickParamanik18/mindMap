@@ -85,7 +85,7 @@ function App() {
         const newNode = {
             id: uuidv4(),
             name: "Untitled Node",
-            description: "",
+            description: "Empty Desctiption",
             children: [],
         };
 
