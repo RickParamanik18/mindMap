@@ -1,0 +1,21 @@
+.controller_bar {
+    padding: 5px;
+    position: absolute;
+    top: 0;
+    z-index: 999;
+    display: flex;
+    gap: 6px;
+}
+
+.controller-btn {
+    border-radius: 5px;
+    padding: 6px 10px;
+    background: #00ff0055;
+    cursor: pointer;
+    font-size: 14px;
+    user-select: none;
+}
+
+.controller-btn:hover {
+    background: #00ff0099;
+}

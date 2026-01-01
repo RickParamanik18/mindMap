@@ -5,6 +5,8 @@ import data from "./data/data1.json";
 import { useEffect, useState } from "react";
 import CustomNode from "./components/CustomNode";
 import { transformMindmapData } from "./util/helper";
+import NodeDetail from "./components/NodeDetail";
+import "./app.css";
 
 const nodeTypes = {
     selectorNode: CustomNode,
@@ -30,8 +32,11 @@ function App() {
     };
     const submitHandler = (e) => {
         e.preventDefault();
-        console.log(formData);
-        //update json
+        if (!activeNode) {
+            alert("Select a Node to Edit");
+            return;
+        }
+
         function updateNodeById(node, targetId, updates) {
             if (node.id === targetId) {
                 return {
@@ -48,8 +53,6 @@ function App() {
             };
         }
 
-        // if (!activeNode) return;
-
         setTreeData((prev) =>
             updateNodeById(prev, activeNode.id, {
                 name: formData.name,
@@ -60,13 +63,12 @@ function App() {
     };
 
     const nodeClickHandler = (e, node) => {
-        console.log("Clicked - " + node.id);
         setActiveNode(node);
         setFormData({
             name: node.data.label,
             description: node.data.description,
         });
-        console.log(formData);
+
         setCollapsedNode((prev) => {
             const next = new Set(prev);
 
@@ -78,7 +80,6 @@ function App() {
 
             return next;
         });
-        // console.log(formData);
     };
 
     const addNode = (id) => {
@@ -105,7 +106,6 @@ function App() {
 
         setTreeData((prev) => {
             addNodeRecursive(prev);
-            // console.log("hello", prev);
             return { ...prev };
         });
     };
@@ -136,53 +136,33 @@ function App() {
         console.log(result);
     }, [treeData, collapsedNode, activeNode]);
 
+    const controllers = [
+        {
+            name: "Collapse All",
+            onClick: () => setCollapsedNode(new Set(treeData.id)),
+        },
+        {
+            name: "Expand All",
+            onClick: () => setCollapsedNode(new Set()),
+        },
+        {
+            name: "Fit View",
+            onClick: () => {},
+        },
+    ];
+
     return (
         <>
-            <div
-                className="controllers"
-                style={{
-                    padding: "5px",
-                    position: "absolute",
-                    top: "0px",
-                    zIndex: 999,
-                }}
-            >
-                <span
-                    style={{
-                        borderRadius: "5px",
-                        padding: "5px",
-                        margin: "5px",
-                        background: "#00ff0055",
-                        cursor: "pointer",
-                    }}
-                    onClick={() => setCollapsedNode(new Set(treeData.id))}
-                >
-                    Collapse All
-                </span>
-                <span
-                    style={{
-                        borderRadius: "5px",
-                        padding: "5px",
-                        margin: "5px",
-                        background: "#00ff0055",
-                        cursor: "pointer",
-                    }}
-                    onClick={() => setCollapsedNode(new Set())}
-                >
-                    Expand All
-                </span>
-                <span
-                    style={{
-                        borderRadius: "5px",
-                        padding: "5px",
-                        margin: "5px",
-                        background: "#00ff0055",
-                        cursor: "pointer",
-                    }}
-                    // onClick={() => fitView({ padding: 0.2 })}
-                >
-                    Fit View
-                </span>
+            <div className="controller_bar">
+                {controllers.map(({ name, onClick }) => (
+                    <span
+                        key={name}
+                        className="controller-btn"
+                        onClick={onClick}
+                    >
+                        {name}
+                    </span>
+                ))}
             </div>
             <div
                 className="container"
@@ -200,79 +180,11 @@ function App() {
                         <Controls />
                     </ReactFlow>
                 </div>
-                <div
-                    style={{
-                        background: "#1f7a4d",
-                        padding: "20px",
-                        borderRadius: "10px",
-                        color: "#fff",
-                        fontFamily: "Arial, sans-serif",
-                    }}
-                >
-                    <h1
-                        style={{
-                            marginBottom: "15px",
-                            fontSize: "20px",
-                            textAlign: "center",
-                        }}
-                    >
-                        Node Detail
-                    </h1>
-
-                    <form
-                        style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "12px",
-                        }}
-                    >
-                        <input
-                            type="text"
-                            name="name"
-                            placeholder="Node name"
-                            onChange={formChangeHandler}
-                            value={formData.name}
-                            style={{
-                                padding: "8px",
-                                borderRadius: "5px",
-                                border: "none",
-                                outline: "none",
-                                fontSize: "14px",
-                            }}
-                        />
-
-                        <textarea
-                            name="description"
-                            placeholder="Description"
-                            onChange={formChangeHandler}
-                            value={formData.description}
-                            rows={4}
-                            style={{
-                                padding: "8px",
-                                borderRadius: "5px",
-                                border: "none",
-                                outline: "none",
-                                fontSize: "14px",
-                                resize: "none",
-                            }}
-                        />
-
-                        <input
-                            type="submit"
-                            value="Save"
-                            onClick={submitHandler}
-                            style={{
-                                padding: "10px",
-                                borderRadius: "5px",
-                                border: "none",
-                                cursor: "pointer",
-                                background: "#ffffff",
-                                color: "#1f7a4d",
-                                fontWeight: "bold",
-                            }}
-                        />
-                    </form>
-                </div>
+                <NodeDetail
+                    formData={formData}
+                    formChangeHandler={formChangeHandler}
+                    submitHandler={submitHandler}
+                />
             </div>
         </>
     );
