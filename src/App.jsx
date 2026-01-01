@@ -32,6 +32,30 @@ function App() {
         e.preventDefault();
         console.log(formData);
         //update json
+        // function updateNodeById(node, targetId, updates) {
+        //     if (node.id === targetId) {
+        //         return {
+        //             ...node,
+        //             ...updates,
+        //         };
+        //     }
+
+        //     return {
+        //         ...node,
+        //         children: node.children.map((child) =>
+        //             updateNodeById(child, targetId, updates)
+        //         ),
+        //     };
+        // }
+
+        // if (!activeNode) return;
+
+        // setTreeData((prev) =>
+        //     updateNodeById(prev, activeNode.id, {
+        //         name: formData.name,
+        //         description: formData.description,
+        //     })
+        // );
     };
 
     const nodeClickHandler = (e, node) => {
@@ -53,6 +77,7 @@ function App() {
 
             return next;
         });
+        // console.log(formData);
     };
 
     const addNode = (id) => {
