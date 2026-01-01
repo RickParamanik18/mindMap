@@ -32,30 +32,31 @@ function App() {
         e.preventDefault();
         console.log(formData);
         //update json
-        // function updateNodeById(node, targetId, updates) {
-        //     if (node.id === targetId) {
-        //         return {
-        //             ...node,
-        //             ...updates,
-        //         };
-        //     }
+        function updateNodeById(node, targetId, updates) {
+            if (node.id === targetId) {
+                return {
+                    ...node,
+                    ...updates,
+                };
+            }
 
-        //     return {
-        //         ...node,
-        //         children: node.children.map((child) =>
-        //             updateNodeById(child, targetId, updates)
-        //         ),
-        //     };
-        // }
+            return {
+                ...node,
+                children: node.children.map((child) =>
+                    updateNodeById(child, targetId, updates)
+                ),
+            };
+        }
 
         // if (!activeNode) return;
 
-        // setTreeData((prev) =>
-        //     updateNodeById(prev, activeNode.id, {
-        //         name: formData.name,
-        //         description: formData.description,
-        //     })
-        // );
+        setTreeData((prev) =>
+            updateNodeById(prev, activeNode.id, {
+                name: formData.name,
+                description: formData.description,
+            })
+        );
+        alert("Node Edited");
     };
 
     const nodeClickHandler = (e, node) => {
@@ -230,7 +231,7 @@ function App() {
                             name="name"
                             placeholder="Node name"
                             onChange={formChangeHandler}
-                            defaultValue={formData.name}
+                            value={formData.name}
                             style={{
                                 padding: "8px",
                                 borderRadius: "5px",
@@ -244,7 +245,7 @@ function App() {
                             name="description"
                             placeholder="Description"
                             onChange={formChangeHandler}
-                            defaultValue={formData.description}
+                            value={formData.description}
                             rows={4}
                             style={{
                                 padding: "8px",
