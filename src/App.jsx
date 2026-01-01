@@ -1,4 +1,4 @@
-import { ReactFlow, Background, Controls } from "@xyflow/react";
+import { ReactFlow, Background, Controls, useReactFlow } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { v4 as uuidv4 } from "uuid";
 import data from "./data/data1.json";
@@ -17,6 +17,8 @@ function App() {
     const [collapsedNode, setCollapsedNode] = useState(new Set());
     const [activeNode, setActiveNode] = useState(null);
     const [formData, setFormData] = useState({});
+
+    // const { fitView } = useReactFlow();
 
     const formChangeHandler = (e) => {
         const { name, value } = e.target;
@@ -109,96 +111,144 @@ function App() {
     }, [treeData, collapsedNode, activeNode]);
 
     return (
-        <div
-            className="container"
-            style={{ display: "grid", gridTemplateColumns: "70% 30%" }}
-        >
-            <div style={{ height: "100vh", width: "100%" }}>
-                <ReactFlow
-                    nodes={nodes}
-                    edges={edges}
-                    nodeTypes={nodeTypes}
-                    onNodeClick={nodeClickHandler}
-                    fitView
-                >
-                    <Background />
-                    <Controls />
-                </ReactFlow>
-            </div>
+        <>
             <div
+                className="controllers"
                 style={{
-                    background: "#1f7a4d",
-                    padding: "20px",
-                    borderRadius: "10px",
-                    color: "#fff",
-                    fontFamily: "Arial, sans-serif",
+                    padding: "5px",
+                    position: "absolute",
+                    top: "0px",
+                    zIndex: 999,
                 }}
             >
-                <h1
+                <span
                     style={{
-                        marginBottom: "15px",
-                        fontSize: "20px",
-                        textAlign: "center",
+                        borderRadius: "5px",
+                        padding: "5px",
+                        margin: "5px",
+                        background: "#00ff0055",
+                        cursor: "pointer",
                     }}
+                    onClick={() => setCollapsedNode(new Set(treeData.id))}
                 >
-                    Node Detail
-                </h1>
-
-                <form
+                    Collapse All
+                </span>
+                <span
                     style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "12px",
+                        borderRadius: "5px",
+                        padding: "5px",
+                        margin: "5px",
+                        background: "#00ff0055",
+                        cursor: "pointer",
                     }}
+                    onClick={() => setCollapsedNode(new Set())}
                 >
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder="Node name"
-                        onChange={formChangeHandler}
-                        defaultValue={formData.name}
-                        style={{
-                            padding: "8px",
-                            borderRadius: "5px",
-                            border: "none",
-                            outline: "none",
-                            fontSize: "14px",
-                        }}
-                    />
-
-                    <textarea
-                        name="description"
-                        placeholder="Description"
-                        onChange={formChangeHandler}
-                        defaultValue={formData.description}
-                        rows={4}
-                        style={{
-                            padding: "8px",
-                            borderRadius: "5px",
-                            border: "none",
-                            outline: "none",
-                            fontSize: "14px",
-                            resize: "none",
-                        }}
-                    />
-
-                    <input
-                        type="submit"
-                        value="Save"
-                        onClick={submitHandler}
-                        style={{
-                            padding: "10px",
-                            borderRadius: "5px",
-                            border: "none",
-                            cursor: "pointer",
-                            background: "#ffffff",
-                            color: "#1f7a4d",
-                            fontWeight: "bold",
-                        }}
-                    />
-                </form>
+                    Expand All
+                </span>
+                <span
+                    style={{
+                        borderRadius: "5px",
+                        padding: "5px",
+                        margin: "5px",
+                        background: "#00ff0055",
+                        cursor: "pointer",
+                    }}
+                    // onClick={() => fitView({ padding: 0.2 })}
+                >
+                    Fit View
+                </span>
             </div>
-        </div>
+            <div
+                className="container"
+                style={{ display: "grid", gridTemplateColumns: "70% 30%" }}
+            >
+                <div style={{ height: "100vh", width: "100%" }}>
+                    <ReactFlow
+                        nodes={nodes}
+                        edges={edges}
+                        nodeTypes={nodeTypes}
+                        onNodeClick={nodeClickHandler}
+                        fitView
+                    >
+                        <Background />
+                        <Controls />
+                    </ReactFlow>
+                </div>
+                <div
+                    style={{
+                        background: "#1f7a4d",
+                        padding: "20px",
+                        borderRadius: "10px",
+                        color: "#fff",
+                        fontFamily: "Arial, sans-serif",
+                    }}
+                >
+                    <h1
+                        style={{
+                            marginBottom: "15px",
+                            fontSize: "20px",
+                            textAlign: "center",
+                        }}
+                    >
+                        Node Detail
+                    </h1>
+
+                    <form
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "12px",
+                        }}
+                    >
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Node name"
+                            onChange={formChangeHandler}
+                            defaultValue={formData.name}
+                            style={{
+                                padding: "8px",
+                                borderRadius: "5px",
+                                border: "none",
+                                outline: "none",
+                                fontSize: "14px",
+                            }}
+                        />
+
+                        <textarea
+                            name="description"
+                            placeholder="Description"
+                            onChange={formChangeHandler}
+                            defaultValue={formData.description}
+                            rows={4}
+                            style={{
+                                padding: "8px",
+                                borderRadius: "5px",
+                                border: "none",
+                                outline: "none",
+                                fontSize: "14px",
+                                resize: "none",
+                            }}
+                        />
+
+                        <input
+                            type="submit"
+                            value="Save"
+                            onClick={submitHandler}
+                            style={{
+                                padding: "10px",
+                                borderRadius: "5px",
+                                border: "none",
+                                cursor: "pointer",
+                                background: "#ffffff",
+                                color: "#1f7a4d",
+                                fontWeight: "bold",
+                            }}
+                        />
+                    </form>
+                </div>
+            </div>
+        </>
     );
 }
 
