@@ -1,0 +1,163 @@
+{
+    "id": 1,
+    "name": "Technology",
+    "description": "Main technology domains",
+    "children": [
+        {
+            "id": 2,
+            "name": "Software",
+            "description": "Software development fields",
+            "children": [
+                {
+                    "id": 3,
+                    "name": "Web Development",
+                    "description": "Building websites and web apps",
+                    "children": [
+                        {
+                            "id": 4,
+                            "name": "Frontend",
+                            "description": "User interface and experience",
+                            "children": [
+                                {
+                                    "id": 5,
+                                    "name": "React",
+                                    "description": "Frontend library",
+                                    "children": []
+                                },
+                                {
+                                    "id": 6,
+                                    "name": "Vue",
+                                    "description": "Frontend framework",
+                                    "children": []
+                                }
+                            ]
+                        },
+                        {
+                            "id": 7,
+                            "name": "Backend",
+                            "description": "Server-side development",
+                            "children": [
+                                {
+                                    "id": 8,
+                                    "name": "Node.js",
+                                    "description": "JavaScript runtime",
+                                    "children": []
+                                },
+                                {
+                                    "id": 9,
+                                    "name": "Django",
+                                    "description": "Python backend framework",
+                                    "children": []
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 10,
+                    "name": "Mobile Development",
+                    "description": "Mobile application development",
+                    "children": [
+                        {
+                            "id": 11,
+                            "name": "Android",
+                            "description": "Android apps",
+                            "children": []
+                        },
+                        {
+                            "id": 12,
+                            "name": "iOS",
+                            "description": "iOS apps",
+                            "children": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 13,
+            "name": "Hardware",
+            "description": "Physical computing components",
+            "children": [
+                {
+                    "id": 14,
+                    "name": "Computers",
+                    "description": "Personal and enterprise computers",
+                    "children": [
+                        {
+                            "id": 15,
+                            "name": "Laptops",
+                            "description": "Portable computers",
+                            "children": []
+                        },
+                        {
+                            "id": 16,
+                            "name": "Desktops",
+                            "description": "Stationary computers",
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "id": 17,
+                    "name": "IoT Devices",
+                    "description": "Connected smart devices",
+                    "children": [
+                        {
+                            "id": 18,
+                            "name": "Smart Sensors",
+                            "description": "Environmental sensors",
+                            "children": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 19,
+            "name": "Emerging Tech",
+            "description": "Future-focused technologies",
+            "children": [
+                {
+                    "id": 20,
+                    "name": "Artificial Intelligence",
+                    "description": "Machine intelligence",
+                    "children": [
+                        {
+                            "id": 21,
+                            "name": "Machine Learning",
+                            "description": "Learning from data",
+                            "children": [
+                                {
+                                    "id": 22,
+                                    "name": "Supervised Learning",
+                                    "description": "Labeled data training",
+                                    "children": []
+                                },
+                                {
+                                    "id": 23,
+                                    "name": "Reinforcement Learning",
+                                    "description": "Reward-based learning",
+                                    "children": []
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 24,
+                    "name": "Blockchain",
+                    "description": "Decentralized systems",
+                    "children": [
+                        {
+                            "id": 25,
+                            "name": "Smart Contracts",
+                            "description": "Self-executing contracts",
+                            "children": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+{
+    "id": 1,
+    "name": "Vehicles",
+    "description": "Different types of vehicles used for transportation",
+    "children": [
+        {
+            "id": 2,
+            "name": "Car",
+            "description": "Four-wheeled motor vehicles",
+            "children": [
+                {
+                    "id": 3,
+                    "name": "Sedan",
+                    "description": "Comfortable car for daily use",
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "name": "SUV",
+                    "description": "Sport Utility Vehicle for rough and urban roads",
+                    "children": []
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "name": "Bike",
+            "description": "Two-wheeled motor vehicles",
+            "children": []
+        }
+    ]
+}
