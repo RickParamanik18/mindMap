@@ -1,4 +1,4 @@
-import { ReactFlow, Background, Controls, useReactFlow } from "@xyflow/react";
+import { ReactFlow, Background, Controls } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { v4 as uuidv4 } from "uuid";
 import data from "./data/data1.json";
@@ -7,6 +7,7 @@ import CustomNode from "./components/CustomNode";
 import { transformMindmapData } from "./util/helper";
 import NodeDetail from "./components/NodeDetail";
 import "./app.css";
+import Controllers from "./components/Controllers";
 
 const nodeTypes = {
     selectorNode: CustomNode,
@@ -19,8 +20,6 @@ function App() {
     const [collapsedNode, setCollapsedNode] = useState(new Set());
     const [activeNode, setActiveNode] = useState(null);
     const [formData, setFormData] = useState({});
-
-    // const { fitView } = useReactFlow();
 
     const formChangeHandler = (e) => {
         const { name, value } = e.target;
@@ -136,34 +135,8 @@ function App() {
         console.log(result);
     }, [treeData, collapsedNode, activeNode]);
 
-    const controllers = [
-        {
-            name: "Collapse All",
-            onClick: () => setCollapsedNode(new Set(treeData.id)),
-        },
-        {
-            name: "Expand All",
-            onClick: () => setCollapsedNode(new Set()),
-        },
-        {
-            name: "Fit View",
-            onClick: () => {},
-        },
-    ];
-
     return (
         <>
-            <div className="controller_bar">
-                {controllers.map(({ name, onClick }) => (
-                    <span
-                        key={name}
-                        className="controller-btn"
-                        onClick={onClick}
-                    >
-                        {name}
-                    </span>
-                ))}
-            </div>
             <div
                 className="container"
                 style={{ display: "grid", gridTemplateColumns: "70% 30%" }}
@@ -176,6 +149,10 @@ function App() {
                         onNodeClick={nodeClickHandler}
                         fitView
                     >
+                        <Controllers
+                            treeData={treeData}
+                            setCollapsedNode={setCollapsedNode}
+                        />
                         <Background />
                         <Controls />
                     </ReactFlow>
