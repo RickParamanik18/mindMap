@@ -16,10 +16,30 @@ function App() {
     const [edges, setEdges] = useState([]);
     const [collapsedNode, setCollapsedNode] = useState(new Set());
     const [activeNode, setActiveNode] = useState(null);
+    const [formData, setFormData] = useState({});
+
+    const formChangeHandler = (e) => {
+        const { name, value } = e.target;
+
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+    const submitHandler = (e) => {
+        e.preventDefault();
+        console.log(formData);
+        //update json
+    };
 
     const nodeClickHandler = (e, node) => {
         console.log("Clicked - " + node.id);
-        setActiveNode(node.id);
+        setActiveNode(node);
+        setFormData({
+            name: node.data.label,
+            description: node.data.description,
+        });
+        console.log(formData);
         setCollapsedNode((prev) => {
             const next = new Set(prev);
 
@@ -81,7 +101,7 @@ function App() {
             addNode,
             deleteNode,
             collapsedNode,
-            activeNode
+            activeNode?.id
         );
         setNodes(result.nodes);
         setEdges(result.edges);
@@ -89,8 +109,11 @@ function App() {
     }, [treeData, collapsedNode, activeNode]);
 
     return (
-        <div className="container">
-            <div style={{ height: "100vh", width: "100vw" }}>
+        <div
+            className="container"
+            style={{ display: "grid", gridTemplateColumns: "70% 30%" }}
+        >
+            <div style={{ height: "100vh", width: "100%" }}>
                 <ReactFlow
                     nodes={nodes}
                     edges={edges}
@@ -101,6 +124,79 @@ function App() {
                     <Background />
                     <Controls />
                 </ReactFlow>
+            </div>
+            <div
+                style={{
+                    background: "#1f7a4d",
+                    padding: "20px",
+                    borderRadius: "10px",
+                    color: "#fff",
+                    fontFamily: "Arial, sans-serif",
+                }}
+            >
+                <h1
+                    style={{
+                        marginBottom: "15px",
+                        fontSize: "20px",
+                        textAlign: "center",
+                    }}
+                >
+                    Node Detail
+                </h1>
+
+                <form
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "12px",
+                    }}
+                >
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Node name"
+                        onChange={formChangeHandler}
+                        defaultValue={formData.name}
+                        style={{
+                            padding: "8px",
+                            borderRadius: "5px",
+                            border: "none",
+                            outline: "none",
+                            fontSize: "14px",
+                        }}
+                    />
+
+                    <textarea
+                        name="description"
+                        placeholder="Description"
+                        onChange={formChangeHandler}
+                        defaultValue={formData.description}
+                        rows={4}
+                        style={{
+                            padding: "8px",
+                            borderRadius: "5px",
+                            border: "none",
+                            outline: "none",
+                            fontSize: "14px",
+                            resize: "none",
+                        }}
+                    />
+
+                    <input
+                        type="submit"
+                        value="Save"
+                        onClick={submitHandler}
+                        style={{
+                            padding: "10px",
+                            borderRadius: "5px",
+                            border: "none",
+                            cursor: "pointer",
+                            background: "#ffffff",
+                            color: "#1f7a4d",
+                            fontWeight: "bold",
+                        }}
+                    />
+                </form>
             </div>
         </div>
     );
